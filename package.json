@@ -10,10 +10,16 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+<<<<<<< HEAD
     "cors": "^2.8.5",
     "dotenv": "^16.0.0",
     "express": "^4.17.3",
     "mongodb": "^4.4.0",
+=======
+    "bcryptjs": "^2.4.3",
+    "dotenv": "^16.0.0",
+    "express": "^4.17.3",
+>>>>>>> 9352ad84577d452b24d99ceb20b77b4328d0f4b4
     "mongoose": "^6.2.3"
   },
   "devDependencies": {

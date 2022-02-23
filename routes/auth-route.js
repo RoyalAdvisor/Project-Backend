@@ -1,7 +1,7 @@
-const router = require("express").Router();
+// const router = require("express").Router();
 
-router.post("/register", (req, res) => {
-  res.send("Register working");
-});
+// router.post("/register", (req, res) => {
+//   res.send("Register working");
+// });
 
-module.exports = router;
+// module.exports = router;

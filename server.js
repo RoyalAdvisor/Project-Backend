@@ -2,11 +2,13 @@ const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
 const authRoute = require("./routes/auth-route");
+const productRoute = require("./routes/product-route");
 const dotenv = require("dotenv");
 
 dotenv.config();
 app.use(express.json());
 app.use("/api/user", authRoute);
+app.use("/api/product", productRoute);
 
 mongoose.connect(
   process.env.database_connect,
@@ -15,6 +17,10 @@ mongoose.connect(
     console.log("Connected to MongoDB Database.");
   }
 );
+
+app.get("/", (req, res) => {
+  res.send("Welcome to our MongoDB REST API");
+});
 
 const port = process.env.PORT || 5000;
 app.listen(port, () => {

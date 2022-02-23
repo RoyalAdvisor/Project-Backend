@@ -1,4 +1,6 @@
 const router = require("express").Router();
+const jwt = require("jsonwebtoken");
+const config = require("../config/auth-config");
 const bcrypt = require("bcryptjs");
 const user = require("../models/user-model");
 
@@ -34,10 +36,12 @@ router.post("/login", async (req, res) => {
 
   const hashedPassword = await bcrypt.hash(req.body.password, 10);
 
-  if (hashedPassword != user.password)
+  if (hashedPassword != user.password) {
     return res.status(400).send({ message: "Invalid password or email!" });
-
-  res.status(200).send({ id: user_id });
+  } else {
+    res.header("auth-token", token).send(token);
+    const token = jwt.sign({ _id: user._id }, config.secret);
+  }
 });
 
 module.exports = router;

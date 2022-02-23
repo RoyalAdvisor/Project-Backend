@@ -39,8 +39,9 @@ router.post("/login", async (req, res) => {
   if (hashedPassword != user.password) {
     return res.status(400).send({ message: "Invalid password or email!" });
   } else {
-    res.header("auth-token", token).send(token);
-    const token = jwt.sign({ _id: user._id }, config.secret);
+    console.log({ message: "Login successful!" });
+    // res.header("auth-token", token).send(token);
+    // const token = jwt.sign({ _id: user._id }, config.secret);
   }
 });
 

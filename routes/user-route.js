@@ -4,9 +4,10 @@ const config = require("../config/auth-config");
 const bcrypt = require("bcryptjs");
 const user = require("../models/user-model");
 const { getUser } = require("../middleware/get-items");
+const verify = require("../middleware/verifyInfo");
 
 //Register Route
-router.post("/register", async (req, res) => {
+router.post("/register", verify, async (req, res) => {
   const emailCheck = await user.findOne({ email: req.body.email });
   if (emailCheck) {
     return res.status(400).send({ message: "Email already exists!" });
@@ -58,17 +59,15 @@ router.get("/:id", getUser, async (req, res) => {
 
 //Update a user
 router.put("/:id", getUser, async (req, res) => {
+  const updatedUser = await res.user.save();
   if (req.body.fullname != null) res.user.fullname = req.body.fullname;
   if (req.body.email != null) res.user.email = req.body.email;
   if (req.body.password != null) res.user.password = req.body.password;
   if (req.body.phone_number != null)
     res.user.phone_number = req.body.phone_number;
-  try {
-    const updatedUser = await res.user.save();
-    res.status(202).send({ message: "user updated successfully!" });
-  } catch (error) {
-    return res.status(503).send({ message: error.message });
-  }
+  res.status(202).send({ message: "user updated successfully!" });
+  if (!updatedUser)
+    return res.status(503).send({ message: "User can't be updated!" });
 });
 
 //Delete a user

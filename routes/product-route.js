@@ -1,5 +1,6 @@
 const router = require("express").Router();
 const Product = require("../models/product-model");
+const { getProduct } = require("../middleware/get-items");
 
 //Getting all products.
 router.get("/", async (req, res) => {
@@ -71,19 +72,5 @@ router.delete("/:id", getProduct, async (req, res) => {
     res.status(500).send({ message: error.message });
   }
 });
-
-async function getProduct(req, res, next) {
-  let product;
-  try {
-    product = await Product.findById(req.params.id);
-    if (!product) {
-      return res.status(404).send({ message: "Product not found." });
-    }
-  } catch (error) {
-    return res.status(500).send({ message: error.message });
-  }
-  res.product = product;
-  next();
-}
 
 module.exports = router;

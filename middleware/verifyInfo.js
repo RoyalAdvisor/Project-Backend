@@ -1,4 +1,4 @@
-const user = require("../models/user-model");
+const user = require("../models/userModel");
 const credentialsCheck = (req, res, next) => {
   user
     .findOne({

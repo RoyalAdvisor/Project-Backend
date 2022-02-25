@@ -2,8 +2,8 @@ const router = require("express").Router();
 const jwt = require("jsonwebtoken");
 const config = require("../config/auth-config");
 const bcrypt = require("bcryptjs");
-const user = require("../models/user-model");
-const { getUser } = require("../middleware/get-items");
+const user = require("../models/userModel");
+const { getUser } = require("../middleware/getItems");
 const verify = require("../middleware/verifyInfo");
 
 //Register Route

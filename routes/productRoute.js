@@ -1,9 +1,10 @@
 const router = require("express").Router();
 const Product = require("../models/productModel");
 const { getProduct } = require("../middleware/getItems");
+const verifyAcc = require("../middleware/auth-jwt");
 
 //Getting all products.
-router.get("/", async (req, res) => {
+router.get("/", verifyAcc, async (req, res) => {
   try {
     const products = await Product.find();
     res.send(products);
@@ -13,19 +14,19 @@ router.get("/", async (req, res) => {
 });
 
 //Getting one product.
-router.get("/:id", getProduct, (req, res) => {
+router.get("/:id", [verifyAcc, getProduct], (req, res) => {
   res.send(res.product);
 });
 
 //Creating one product.
-router.post("/", async (req, res) => {
+router.post("/", verifyAcc, async (req, res) => {
   const product = new Product({
     title: req.body.title,
     catergory: req.body.catergory,
     description: req.body.description,
     image: req.body.image,
     price: req.body.price,
-    created_by: req.body.created_by,
+    created_by: req.userId,
   });
   try {
     const newProduct = await product.save();
@@ -36,7 +37,7 @@ router.post("/", async (req, res) => {
 });
 
 //Updating one product.
-router.put("/:id", getProduct, async (req, res) => {
+router.put("/:id", [verifyAcc, getProduct], async (req, res) => {
   if (req.body.title != null) {
     res.product.title = req.body.title;
   }
@@ -53,7 +54,7 @@ router.put("/:id", getProduct, async (req, res) => {
     res.product.price = req.body.price;
   }
   if (req.body.created_by != null) {
-    res.product.created_by = req.body.created_by;
+    res.product.created_by = req.userId;
   }
   try {
     const updateProduct = await res.product.save();
@@ -64,7 +65,7 @@ router.put("/:id", getProduct, async (req, res) => {
 });
 
 //Delete one product.
-router.delete("/:id", getProduct, async (req, res) => {
+router.delete("/:id", [verifyAcc, getProduct], async (req, res) => {
   try {
     await res.product.remove();
     res.send({ message: "Product deleted successfully." });

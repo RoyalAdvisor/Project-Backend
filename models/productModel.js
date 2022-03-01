@@ -22,7 +22,8 @@ const productSchema = new mongoose.Schema({
     required: true,
   },
   created_by: {
-    type: "",
+    type: String,
+    required: true,
   },
 });
 

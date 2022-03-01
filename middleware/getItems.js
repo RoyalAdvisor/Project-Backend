@@ -18,9 +18,9 @@ async function getProduct(req, res, next) {
 async function getUser(req, res, next) {
   let user;
   try {
-    user = await User.findById(req.params.id);
+    user = await User.findById(req.userId);
     if (!user) {
-      return res.status(404).send({ message: "Product not found." });
+      return res.status(404).send({ message: "User not found." });
     }
   } catch (error) {
     return res.status(500).send({ message: error.message });

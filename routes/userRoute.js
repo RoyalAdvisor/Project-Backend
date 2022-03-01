@@ -1,10 +1,12 @@
 const router = require("express").Router();
 const jwt = require("jsonwebtoken");
-const config = require("../config/auth-config");
 const bcrypt = require("bcryptjs");
 const user = require("../models/userModel");
 const { getUser } = require("../middleware/getItems");
+const verifyAcc = require("../middleware/auth-jwt");
 const verify = require("../middleware/verifyInfo");
+const dotenv = require("dotenv");
+dotenv.config();
 
 //Register Route
 router.post("/register", verify, async (req, res) => {
@@ -37,28 +39,28 @@ router.post("/login", (req, res) => {
     if (!user) return res.sendStatus(404);
     const passMatch = bcrypt.compareSync(req.body.password, user.password);
     if (!passMatch) return res.sendStatus(409);
-    const token = jwt.sign({ _id: user._id }, config.secret);
+    const token = jwt.sign({ _id: user._id }, process.env.ACC_SECRET_KEY);
     if (!token) return res.sendStatus(401);
     res.header("auth-token", token).send(token);
   });
 });
 
 //Get all users
-router.get("/", async (req, res) => {
+router.get("/", verifyAcc, async (req, res) => {
   const findUsers = await user.find();
   if (!findUsers) return res.sendStatus(404);
   res.send(findUsers);
 });
 
 //Get one user
-router.get("/:id", getUser, async (req, res) => {
+router.get("/:id", verifyAcc, async (req, res) => {
   const findUser = await user.findById(req.params.id);
   if (!findUser) return res.sendStatus(404);
   res.send(findUser);
 });
 
 //Update a user
-router.put("/:id", getUser, async (req, res) => {
+router.put("/:id", [getUser, verifyAcc], async (req, res) => {
   const updatedUser = await res.user.save();
   if (req.body.fullname != null) res.user.fullname = req.body.fullname;
   if (req.body.email != null) res.user.email = req.body.email;
@@ -71,7 +73,7 @@ router.put("/:id", getUser, async (req, res) => {
 });
 
 //Delete a user
-router.delete("/:id", getUser, async (req, res) => {
+router.delete("/:id", [getUser, verifyAcc], async (req, res) => {
   const deletedUser = await res.user.delete();
   if (!deletedUser)
     return res.status(503).send({ message: "Operation error." });

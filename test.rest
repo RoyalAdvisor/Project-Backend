@@ -1,0 +1,46 @@
+POST   http://localhost:5000/api/users/login
+Content-Type: application/json
+
+{
+    "email": "JackieChan@yahoo.com",
+    "password": "jackiechan"
+}
+
+############
+
+GET    http://localhost:5000/api/cart
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjFkYzIzNDVjMGJlYmY0NGQxZmQ5Y2MiLCJpYXQiOjE2NDYxMjUwMDZ9.dGRz6Ad0B0v-JCt7RVnJFAHv1F-9ooEHxnWIt_V0EJE
+################################
+
+GET  http://localhost:5000/api/products
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjFjY2QxMDVjY2MzNGE5NGU1ODhhYzYiLCJpYXQiOjE2NDYwNTgzODJ9.JmaioEdMK1zCTYg1aBNmm0hAai6jgWhwSkPRLJ3C3Yk
+
+#################################
+
+PUT   http://localhost:5000/api/cart/621635d6b84b4b286c0e5b10
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjFkYzIzNDVjMGJlYmY0NGQxZmQ5Y2MiLCJjYXJ0IjpbeyJfaWQiOiI2MjE2MzVkNmI4NGI0YjI4NmMwZTViMTAiLCJ0aXRsZSI6IlByb2R1Y3QtMSIsImNhdGVyZ29yeSI6IlByb2R1Y3RzIiwiZGVzY3JpcHRpb24iOiJOb3JtYWwgcHJvZHVjdCIsImltYWdlIjoiYXNkc2RhIiwicHJpY2UiOiIxLjAwIiwiX192IjowLCJxdWFudGl0eSI6NX1dLCJpYXQiOjE2NDYxMTg0NTcsImV4cCI6MTY0NjIwNDg1N30.nAY_Zx0LE1jRTO9GKp-yd0h-hyUeiIH5WK29G6ti9jk
+ 
+
+ {
+     "quantity": 20
+ }
+
+
+################################
+
+DELETE http://localhost:5000/api/cart/621635d6b84b4b286c0e5b10
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjFkYzIzNDVjMGJlYmY0NGQxZmQ5Y2MiLCJpYXQiOjE2NDYxMjU4ODl9.iDdaTZ-EH4bB08JG95T-aMhCIrsoonYVfE-R-iJAiyo
+
+
+################################################################
+
+POST http://localhost:5000/api/cart/621635d6b84b4b286c0e5b10
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjFkYzIzNDVjMGJlYmY0NGQxZmQ5Y2MiLCJpYXQiOjE2NDYxMjUyODF9.Hp3ywIjV_uIG8PssQBLJxeEUJ0NKOlcmv7v0WKAlxx8
+
+
+{
+    "quantity": 10
+}

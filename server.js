@@ -3,12 +3,14 @@ const app = express();
 const mongoose = require("mongoose");
 const userRoute = require("./routes/userRoute");
 const productRoute = require("./routes/productRoute");
+const cartRoute = require("./routes/cartRoute.js");
 const dotenv = require("dotenv");
 dotenv.config();
 
 app.use(express.json());
-app.use("/api/user", userRoute);
-app.use("/api/product", productRoute);
+app.use("/api/users", userRoute);
+app.use("/api/products", productRoute);
+app.use("/api/cart", cartRoute);
 
 mongoose.connect(
   process.env.database_connect,
